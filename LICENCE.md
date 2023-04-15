@@ -1,0 +1,1 @@
+CC-BY-SA 3.0, see https://creativecommons.org/licenses/by-sa/3.0/at/deed.en

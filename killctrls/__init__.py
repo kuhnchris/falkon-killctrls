@@ -1,0 +1,1 @@
+from .KillCtrlSPlugin import *

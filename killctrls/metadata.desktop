@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Remove CTRL+S Shortcut
+Comment=Remove the shortcut for "ctrl+s"
+Icon=nosavefile.png
+Type=Service
+X-Falkon-Type=Extension/Python
+
+X-Falkon-Author=Kuhn Chris
+X-Falkon-Email=kuhnchris+falkon@kuhnchris.eu
+X-Falkon-Version=0.0.1
