@@ -6,11 +6,12 @@ CAPTURE_KEY = "Ctrl+S"
 
 class KillCtrlSPlugin(Falkon.PluginInterface, QtCore.QObject):
     def init(self, state, settingsPath):
-        #Falkon.MainApplication.instance().plugins().registerAppEventHandler(Falkon.PluginProxy.KeyPressHandler, self)
-        plugins = Falkon.MainApplication.instance().plugins()
+        falkonApp = Falkon.MainApplication.instance()
+        plugins = falkonApp.plugins()
         plugins.mainWindowCreated.connect(self.mainWindowCreated)
         self.capturedObject = []
- #       print("State - {} {}".format(state, settingsPath))
+        if falkonApp.getWindow() != None:
+            self.mainWindowCreated(falkonApp.getWindow())
 
 
     def findQTObjectShortcut(self, c) -> bool:       
@@ -29,7 +30,6 @@ class KillCtrlSPlugin(Falkon.PluginInterface, QtCore.QObject):
                 return True
 
         if type(c) == QtWidgets.QMenuBar:
-#            print(" > Menubar found!")
             qmb: QtWidgets.QMenuBar = c
             for a_ in qmb.actions():
                 if self.findQTObjectShortcut(a_):
@@ -42,7 +42,6 @@ class KillCtrlSPlugin(Falkon.PluginInterface, QtCore.QObject):
 
         if type(c) == QtWidgets.QAction:
             a: QtWidgets.QAction = c      
-#            print(type(c), a.text(), a.children(), a.actionGroup())
             for c_ in a.children():
                 if self.findQTObjectShortcut(c_):
                     self.capturedObject.append(a)
@@ -57,7 +56,6 @@ class KillCtrlSPlugin(Falkon.PluginInterface, QtCore.QObject):
                     return True
 
         if type(c) == QtWidgets.QMenu:
- #           print(" > Menu!")
             qm: QtWidgets.QMenu = c
             for a_ in qm.actions():
                 if self.findQTObjectShortcut(a_):
@@ -74,8 +72,7 @@ class KillCtrlSPlugin(Falkon.PluginInterface, QtCore.QObject):
                 offendingAction: QtWidgets.QAction = self.capturedObject[0]
                 offendingAction.setShortcut(QtGui.QKeySequence())
                 print("the offender should be neutralized.")
-                #return True
-
+                
     def unload(self):   
         print("Plugin unloaded. G'bye")
 
